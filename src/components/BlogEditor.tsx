@@ -1,6 +1,7 @@
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import React, { useState } from 'react';
+import { createBlog } from './../../api/blogApi';
 
 const BlogEditor: React.FC = () => {
   const [blogContent, setBlogContent] = useState('');
@@ -9,23 +10,15 @@ const BlogEditor: React.FC = () => {
     setBlogContent(content);
   };
 
-  const handleSaveBlog = () => {
-    // Retrieve existing blogs from local storage (if any)
-    const existingBlogs = JSON.parse(localStorage.getItem('blogs') || '[]');
-
-    // Create a new blog object
-    const newBlog = {
-      id: Date.now(), // Use a unique ID (in this example, timestamp)
-      content: blogContent,
-    };
-
-    // Add the new blog to the existing blogs array
-    const updatedBlogs = [...existingBlogs, newBlog];
-
-    // Save the updated blogs array to local storage
-    localStorage.setItem('blogs', JSON.stringify(updatedBlogs));
-
-    alert('Blog saved successfully!');
+  const handleSaveBlog = async () => {
+    try {
+      // Call the API function to create a new blog
+      await createBlog(blogContent);
+      alert('Blog saved successfully!');
+    } catch (error) {
+      console.error(error);
+      alert('Failed to save the blog. Please try again.');
+    }
   };
 
   return (
