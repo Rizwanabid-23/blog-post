@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = 'https://your-glitch-project.glitch.me/api'; // Replace with your Glitch project's live URL
+const baseURL = 'https://stone-workable-kale.glitch.me/database'; // Replace with your Glitch project's live URL
 
 export const createBlog = async (content: string): Promise<void> => {
   try {
